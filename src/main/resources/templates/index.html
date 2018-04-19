@@ -3,11 +3,12 @@
 <head>
 <meta charset="UTF-8" />
 <title>工作流</title>
-<link rel="stylesheet" href="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/css/bootstrap.min.css"/>
+<link rel="stylesheet"
+	href="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/css/bootstrap.min.css" />
 </head>
 <body>
 	<div>
-		<button onclick="writeForm()">填写请假单</button>
+		<button onclick="writeForm()" th:if="${userType == 1}">填写请假单</button>
 		<button class="log" onclick="logout()">退出</button>
 	</div>
 	<table th:if="${forms.size()}>0">
@@ -26,11 +27,12 @@
 			<td th:text="${form.applicant}"></td>
 			<td th:text="${form.state}"></td>
 			<td>
-				<button th:if="${form.state} == '填写请假单'"
-					th:onclick="'javascript:apply(\''+${form.id}+'\')'">申请请假</button>
-				<button th:if="${form.state} == '填写请假单'"
-					th:onclick="'javascript:giveup(\''+${form.id}+'\')'">放弃请假</button>
-				<button th:onclick="'javascript:checkState(\''+${form.id}+'\')'"  data-toggle="modal" data-target="#myModal">查看流程</button>
+				<button th:each="button:${form.buttons}"
+					th:text="${#strings.arraySplit(button,'=')[0]}"
+					th:onclick="'javascript:operate(\''+${form.id}+'\',\''+${#strings.arraySplit(button,'=')[1]}+'\')'"></button>
+					
+				<button th:onclick="'javascript:checkState(\''+${form.id}+'\')'"
+					data-toggle="modal" data-target="#myModal">查看流程</button>
 			</td>
 		</tr>
 	</table>
@@ -50,9 +52,7 @@
 						aria-hidden="true">&times;</button>
 					<h4 class="modal-title" id="myModalLabel">流程</h4>
 				</div>
-				<div class="modal-body">
-					
-				</div>
+				<div class="modal-body"></div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-default" data-dismiss="modal">关闭
 					</button>
@@ -64,9 +64,10 @@
 </html>
 
 <style>
-body{
-	margin:10px 10px 100px 10px;
+body {
+	margin: 10px 10px 100px 10px;
 }
+
 * {
 	font-family: "微软雅黑";
 	font-size: 15px;
@@ -111,35 +112,20 @@ button {
 		});
 	}
 
-	function apply(formId) {
+	function operate(formId, operation) {
 		var operator = getUser();
 		if (operator == "") {
 			location.href = "/";
 		}
-		$.ajax({
-			url : "/apply",
-			data : {
-				"formId" : formId,
-				"operator" : operator
-			},
-			success : function(data) {
-				if (data.code == 200) {
-					location.href = "/home";
-				}
-			}
-		});
-	}
-
-	function giveup(formId) {
-		var operator = getUser();
-		if (operator == "") {
-			location.href = "/";
+		if(operation == "null"){
+			operation = "";
 		}
 		$.ajax({
-			url : "/giveup",
+			url : "/next",
 			data : {
 				"formId" : formId,
-				"operator" : operator
+				"operator" : operator,
+				"input" : operation
 			},
 			success : function(data) {
 				if (data.code == 200) {
@@ -159,8 +145,9 @@ button {
 				if (data.code == 200) {
 					var processList = data.info;
 					var html = "";
-					$.each(processList, function(i,item){
-						html += "<span>"+item.name+"(操作人："+item.operator+")"+"</span><br/><br/>";
+					$.each(processList, function(i, item) {
+						html += "<span>" + item.name + "(操作人：" + item.operator
+								+ ")" + "</span><br/><br/>";
 					});
 					$(".modal-body").html(html);
 				}
