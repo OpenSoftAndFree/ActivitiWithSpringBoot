@@ -138,8 +138,7 @@ public class MiaoServiceImpl implements MiaoService {
 	public User loginSuccess(String username) {
 		List<User> users = userService.findByName(username);
 		if (users != null && users.size() > 0) {
-			User user = users.get(0);
-			return user;
+			return users.get(0);
 		}
 		return null;
 	}
@@ -164,7 +163,7 @@ public class MiaoServiceImpl implements MiaoService {
 	public List<HashMap<String, String>> historyState(String formId) {
 		List<HashMap<String, String>> processList = new ArrayList<HashMap<String, String>>();
 		List<HistoricTaskInstance> list = historyService.createHistoricTaskInstanceQuery()
-				.processInstanceBusinessKey(formId).orderByTaskCreateTime().asc().orderByHistoricTaskInstanceEndTime().asc().list();
+				.processInstanceBusinessKey(formId).orderByTaskId().asc().list();
 		if (list != null && list.size() > 0) {
 			for (HistoricTaskInstance hti : list) {
 				HashMap<String, String> map = new HashMap<String, String>();

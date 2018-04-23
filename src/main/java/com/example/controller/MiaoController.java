@@ -46,11 +46,11 @@ public class MiaoController {
 				}
 			}
 		}
-		final String finalUser = user;
 		List<User> users = userService.findByName(user);
 		Integer uType = users.get(0).getType();
 		List<HashMap<String, Object>> formsMap = new ArrayList<HashMap<String, Object>>();
 		
+		String finalUser = user;
 		if (uType == 1) {
 			forms = forms.stream().filter(form -> finalUser.equals(form.getApplicant())).collect(Collectors.toList());
 		} else {
