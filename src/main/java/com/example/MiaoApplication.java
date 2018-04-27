@@ -2,12 +2,12 @@ package com.example;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.activiti.engine.history.HistoricTaskInstance;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -15,8 +15,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.entity.ModelData;
 import com.example.entity.User;
 import com.example.entity.VacationForm;
+import com.example.service.BpmnModelService;
 import com.example.service.MiaoService;
 import com.example.util.ResultInfo;
 
@@ -112,6 +114,16 @@ public class MiaoApplication {
 		List process = miaoService.historyState(formId);
 		result.setCode(200);
 		result.setInfo(process);
+		return result;
+    }
+	
+	@GetMapping( "/changeWorkFlow")
+	public ResultInfo changeWorkFlow(HttpServletRequest request){
+		String modelId = request.getParameter("modelId");
+		ResultInfo result = new ResultInfo();
+		String fileName = miaoService.getJsonBpmn(modelId);
+		result.setCode(200);
+		result.setInfo(fileName);
 		return result;
     }
 }

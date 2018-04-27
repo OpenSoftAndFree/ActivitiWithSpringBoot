@@ -12,36 +12,15 @@
     <userTask id="usertask4" name="放弃请假" activiti:category="apply"></userTask>
     <userTask id="usertask5" name="二次审核" activiti:category="manager"></userTask>
     <sequenceFlow id="flow8" sourceRef="usertask5" targetRef="endevent1"></sequenceFlow>
-    <userTask id="usertask6" name="烧毁请假单" activiti:category="apply"></userTask>
-    <sequenceFlow id="flow9" sourceRef="usertask6" targetRef="endevent1"></sequenceFlow>
-    <userTask id="usertask7" name="保留请假单" activiti:category="apply"></userTask>
-    <sequenceFlow id="flow12" sourceRef="usertask7" targetRef="endevent1"></sequenceFlow>
-    <sequenceFlow id="flow14" sourceRef="usertask4" targetRef="usertask6">
-      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${input=='burn'}]]></conditionExpression>
-    </sequenceFlow>
-    <sequenceFlow id="flow16" sourceRef="usertask4" targetRef="usertask7">
-      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${input=='save'}]]></conditionExpression>
-    </sequenceFlow>
-    <userTask id="usertask8" name="吃了请假单" activiti:category="apply"></userTask>
-    <sequenceFlow id="flow17" sourceRef="usertask4" targetRef="usertask8">
-      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${input=='eat'}]]></conditionExpression>
-    </sequenceFlow>
-    <sequenceFlow id="flow18" sourceRef="usertask8" targetRef="usertask9">
-      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${input=='eat1'}]]></conditionExpression>
-    </sequenceFlow>
     <sequenceFlow id="flow19" sourceRef="usertask3" targetRef="usertask1">
       <conditionExpression xsi:type="tFormalExpression"><![CDATA[${input=='apply'}]]></conditionExpression>
     </sequenceFlow>
     <sequenceFlow id="flow20" sourceRef="usertask3" targetRef="usertask4">
       <conditionExpression xsi:type="tFormalExpression"><![CDATA[${input=='giveup'}]]></conditionExpression>
     </sequenceFlow>
-    <userTask id="usertask9" name="红烧" activiti:category="apply"></userTask>
-    <userTask id="usertask10" name="清蒸" activiti:category="apply"></userTask>
-    <sequenceFlow id="flow21" sourceRef="usertask8" targetRef="usertask10">
-      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${input=='eat2'}]]></conditionExpression>
-    </sequenceFlow>
-    <sequenceFlow id="flow22" sourceRef="usertask10" targetRef="endevent1"></sequenceFlow>
-    <sequenceFlow id="flow23" sourceRef="usertask9" targetRef="endevent1"></sequenceFlow>
+    <userTask id="usertask6" name="吃了请假单" activiti:category="apply"></userTask>
+    <sequenceFlow id="flow21" sourceRef="usertask4" targetRef="usertask6"></sequenceFlow>
+    <sequenceFlow id="flow22" sourceRef="usertask6" targetRef="endevent1"></sequenceFlow>
   </process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_myProcess">
     <bpmndi:BPMNPlane bpmnElement="myProcess" id="BPMNPlane_myProcess">
@@ -55,31 +34,19 @@
         <omgdc:Bounds height="55.0" width="105.0" x="502.0" y="20.0"></omgdc:Bounds>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape bpmnElement="endevent1" id="BPMNShape_endevent1">
-        <omgdc:Bounds height="35.0" width="35.0" x="660.0" y="320.0"></omgdc:Bounds>
+        <omgdc:Bounds height="35.0" width="35.0" x="537.0" y="230.0"></omgdc:Bounds>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape bpmnElement="usertask3" id="BPMNShape_usertask3">
         <omgdc:Bounds height="55.0" width="105.0" x="110.0" y="114.0"></omgdc:Bounds>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape bpmnElement="usertask4" id="BPMNShape_usertask4">
-        <omgdc:Bounds height="55.0" width="105.0" x="218.0" y="230.0"></omgdc:Bounds>
+        <omgdc:Bounds height="55.0" width="105.0" x="218.0" y="220.0"></omgdc:Bounds>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape bpmnElement="usertask5" id="BPMNShape_usertask5">
         <omgdc:Bounds height="55.0" width="105.0" x="502.0" y="99.0"></omgdc:Bounds>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape bpmnElement="usertask6" id="BPMNShape_usertask6">
-        <omgdc:Bounds height="55.0" width="105.0" x="370.0" y="273.0"></omgdc:Bounds>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape bpmnElement="usertask7" id="BPMNShape_usertask7">
-        <omgdc:Bounds height="55.0" width="105.0" x="370.0" y="194.0"></omgdc:Bounds>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape bpmnElement="usertask8" id="BPMNShape_usertask8">
-        <omgdc:Bounds height="55.0" width="105.0" x="218.0" y="352.0"></omgdc:Bounds>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape bpmnElement="usertask9" id="BPMNShape_usertask9">
-        <omgdc:Bounds height="55.0" width="105.0" x="370.0" y="340.0"></omgdc:Bounds>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape bpmnElement="usertask10" id="BPMNShape_usertask10">
-        <omgdc:Bounds height="55.0" width="105.0" x="370.0" y="406.0"></omgdc:Bounds>
+        <omgdc:Bounds height="55.0" width="105.0" x="360.0" y="220.0"></omgdc:Bounds>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge bpmnElement="flow1" id="BPMNEdge_flow1">
         <omgdi:waypoint x="45.0" y="141.0"></omgdi:waypoint>
@@ -98,31 +65,7 @@
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge bpmnElement="flow8" id="BPMNEdge_flow8">
         <omgdi:waypoint x="554.0" y="154.0"></omgdi:waypoint>
-        <omgdi:waypoint x="677.0" y="320.0"></omgdi:waypoint>
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge bpmnElement="flow9" id="BPMNEdge_flow9">
-        <omgdi:waypoint x="475.0" y="300.0"></omgdi:waypoint>
-        <omgdi:waypoint x="677.0" y="320.0"></omgdi:waypoint>
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge bpmnElement="flow12" id="BPMNEdge_flow12">
-        <omgdi:waypoint x="422.0" y="249.0"></omgdi:waypoint>
-        <omgdi:waypoint x="677.0" y="320.0"></omgdi:waypoint>
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge bpmnElement="flow14" id="BPMNEdge_flow14">
-        <omgdi:waypoint x="323.0" y="257.0"></omgdi:waypoint>
-        <omgdi:waypoint x="422.0" y="273.0"></omgdi:waypoint>
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge bpmnElement="flow16" id="BPMNEdge_flow16">
-        <omgdi:waypoint x="323.0" y="257.0"></omgdi:waypoint>
-        <omgdi:waypoint x="370.0" y="221.0"></omgdi:waypoint>
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge bpmnElement="flow17" id="BPMNEdge_flow17">
-        <omgdi:waypoint x="270.0" y="285.0"></omgdi:waypoint>
-        <omgdi:waypoint x="270.0" y="352.0"></omgdi:waypoint>
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge bpmnElement="flow18" id="BPMNEdge_flow18">
-        <omgdi:waypoint x="323.0" y="379.0"></omgdi:waypoint>
-        <omgdi:waypoint x="370.0" y="367.0"></omgdi:waypoint>
+        <omgdi:waypoint x="554.0" y="230.0"></omgdi:waypoint>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge bpmnElement="flow19" id="BPMNEdge_flow19">
         <omgdi:waypoint x="162.0" y="114.0"></omgdi:waypoint>
@@ -130,19 +73,15 @@
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge bpmnElement="flow20" id="BPMNEdge_flow20">
         <omgdi:waypoint x="162.0" y="169.0"></omgdi:waypoint>
-        <omgdi:waypoint x="270.0" y="230.0"></omgdi:waypoint>
+        <omgdi:waypoint x="270.0" y="220.0"></omgdi:waypoint>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge bpmnElement="flow21" id="BPMNEdge_flow21">
-        <omgdi:waypoint x="323.0" y="379.0"></omgdi:waypoint>
-        <omgdi:waypoint x="422.0" y="406.0"></omgdi:waypoint>
+        <omgdi:waypoint x="323.0" y="247.0"></omgdi:waypoint>
+        <omgdi:waypoint x="360.0" y="247.0"></omgdi:waypoint>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge bpmnElement="flow22" id="BPMNEdge_flow22">
-        <omgdi:waypoint x="422.0" y="406.0"></omgdi:waypoint>
-        <omgdi:waypoint x="677.0" y="355.0"></omgdi:waypoint>
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge bpmnElement="flow23" id="BPMNEdge_flow23">
-        <omgdi:waypoint x="475.0" y="367.0"></omgdi:waypoint>
-        <omgdi:waypoint x="677.0" y="355.0"></omgdi:waypoint>
+        <omgdi:waypoint x="465.0" y="247.0"></omgdi:waypoint>
+        <omgdi:waypoint x="537.0" y="247.0"></omgdi:waypoint>
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>

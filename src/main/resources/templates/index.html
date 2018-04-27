@@ -7,41 +7,48 @@
 	href="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/css/bootstrap.min.css" />
 </head>
 <body>
-	<div>
+	<div th:if="hasModel">
 		<button onclick="writeForm()" th:if="${userType == 1}">填写请假单</button>
 		<button class="log" onclick="logout()">退出</button>
+		<div th:if="${userType == 0}">
+			<select id="models">
+				<option th:each="model:${models}" th:value="${model.id}" th:text="${model.name}"></option>
+			</select>
+			<button onclick="changeWorkFlow()">修改流程</button>
+		</div>
+		<div th:if="${userType != 0}">
+			<table th:if="${forms.size()}>0">
+				<thead>
+					<tr>
+						<td>请假标题</td>
+						<td>请假内容</td>
+						<td>请假人</td>
+						<td>状态</td>
+						<td>操作</td>
+					</tr>
+				</thead>
+				<tr th:each="form:${forms}">
+					<td th:text="${form.title}"></td>
+					<td th:text="${form.content}"></td>
+					<td th:text="${form.applicant}"></td>
+					<td th:text="${form.state}"></td>
+					<td>
+						<button th:each="button:${form.buttons}"
+							th:text="${#strings.arraySplit(button,'=')[0]}"
+							th:onclick="'javascript:operate(\''+${form.id}+'\',\''+${#strings.arraySplit(button,'=')[1]}+'\')'"></button>
+							
+						<button th:onclick="'javascript:checkState(\''+${form.id}+'\')'"
+							data-toggle="modal" data-target="#myModal">查看流程</button>
+					</td>
+				</tr>
+			</table>
+			<div th:if="${forms.size()}==0">
+				<br />暂无请假数据
+			</div>
+		</div>
 	</div>
-	<table th:if="${forms.size()}>0">
-		<thead>
-			<tr>
-				<td>请假标题</td>
-				<td>请假内容</td>
-				<td>请假人</td>
-				<td>状态</td>
-				<td>操作</td>
-			</tr>
-		</thead>
-		<tr th:each="form:${forms}">
-			<td th:text="${form.title}"></td>
-			<td th:text="${form.content}"></td>
-			<td th:text="${form.applicant}"></td>
-			<td th:text="${form.state}"></td>
-			<td>
-				<button th:each="button:${form.buttons}"
-					th:text="${#strings.arraySplit(button,'=')[0]}"
-					th:onclick="'javascript:operate(\''+${form.id}+'\',\''+${#strings.arraySplit(button,'=')[1]}+'\')'"></button>
-					
-				<button th:onclick="'javascript:checkState(\''+${form.id}+'\')'"
-					data-toggle="modal" data-target="#myModal">查看流程</button>
-			</td>
-		</tr>
-	</table>
-	<div th:if="${forms.size()}==0">
-		<br />暂无请假数据
-	</div>
-
-
-
+	
+	<div th:if="!hasModel">暂无流程模板，请先配置！</div>
 	<!-- 模态框（Modal） -->
 	<div class="modal fade" id="myModal" tabindex="-1" role="dialog"
 		aria-labelledby="myModalLabel" aria-hidden="true">
@@ -78,7 +85,7 @@ td {
 	border: 1px solid #ccc;
 }
 
-button {
+button,select{
 	padding: 5px;
 	margin: 5px 0;
 	border: 1px solid #aaa;
@@ -91,12 +98,23 @@ button {
 	background: #ec5757;
 	color: #fff;
 }
+
+.upload{
+	float:right;
+}
+
+.upload input{
+	padding: 5px;
+	margin: 5px;
+	border: 1px solid #aaa;
+	border-radius: 4px;
+	float:left;
+}
 </style>
 
 <script src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js" />
-<script
-	src="http://apps.bdimg.com/libs/bootstrap/3.3.4/js/bootstrap.min.js"></script>
-<script>
+<script src="http://apps.bdimg.com/libs/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+<script th:inline="javascript">
 	function writeForm() {
 		location.href = "/form";
 	}
@@ -154,7 +172,22 @@ button {
 			}
 		});
 	}
-
+	
+	function changeWorkFlow(){
+		var selectId = $("#models option:selected").val();
+		$.ajax({
+			url : "/changeWorkFlow",
+			data : {
+				"modelId" : selectId
+			},
+			success : function(data) {
+				if (data.code == 200) {
+					
+				}
+			}
+		});
+	}
+	
 	function getUser() {
 		var name = "userInfo=";
 		var user = "";

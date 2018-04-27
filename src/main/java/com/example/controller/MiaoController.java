@@ -1,6 +1,7 @@
 package com.example.controller;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -9,12 +10,18 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 
+import com.example.entity.DefaultModel;
+import com.example.entity.ModelData;
 import com.example.entity.User;
 import com.example.entity.VacationForm;
+import com.example.service.BpmnModelService;
+import com.example.service.DefaultModelService;
 import com.example.service.MiaoService;
 import com.example.service.UserService;
 
@@ -26,6 +33,12 @@ public class MiaoController {
 	@Autowired
 	private UserService userService;
 
+	@Autowired
+	private BpmnModelService bpmnModelService;
+	
+	@Autowired
+	private DefaultModelService defaultModelService;
+	
 	@GetMapping("/")
 	public String login() {
 		return "login";
@@ -71,9 +84,32 @@ public class MiaoController {
 			}
 		}
 		
+		boolean hasModel = false;
+		Sort sort = new Sort(Direction.DESC, "updateTime");
+		List<ModelData> models = bpmnModelService.findAll(sort);
+		if(models != null) {
+			models = models.stream().filter(item->item.getModel_type().equals(0)).collect(Collectors.toList());
+			if(models.size() > 0) {
+				hasModel = true;
+				List<DefaultModel> defaults = defaultModelService.findAll();
+				if(defaults.size() == 0) {
+					DefaultModel d = new DefaultModel();
+					d.setLast_updated(new Date());
+					d.setModel_id(models.get(0).getId());
+					d.setUpdate_person("system");
+					d.setIp("127.0.0.1");
+					defaultModelService.save(d);
+				}
+			}
+		}
+		
+		if(uType == 0) {
+			model.addAttribute("models", models);
+		}
 		// 将forms参数返回
 		model.addAttribute("forms", formsMap);
 		model.addAttribute("userType", uType);
+		model.addAttribute("showModel", hasModel);
 		return "index";
 	}
 

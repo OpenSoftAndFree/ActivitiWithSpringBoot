@@ -27,4 +27,8 @@ public interface MiaoService {
 	public HashMap<String, String> getButtons(Integer id, Integer type);
 	
 	public String getCurrentUser(HttpServletRequest request);
+
+	public String getJsonBpmn(String modelId);
+
+	boolean isAdmin(String username);
 }
