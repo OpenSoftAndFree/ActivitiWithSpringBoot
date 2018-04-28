@@ -7,9 +7,9 @@
 	href="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/css/bootstrap.min.css" />
 </head>
 <body>
-	<div th:if="hasModel">
+	<button class="log" onclick="logout()">退出</button>
+	<div th:if="${modelCount}>0">
 		<button onclick="writeForm()" th:if="${userType == 1}">填写请假单</button>
-		<button class="log" onclick="logout()">退出</button>
 		<div th:if="${userType == 0}">
 			<select id="models">
 				<option th:each="model:${models}" th:value="${model.id}" th:text="${model.name}"></option>
@@ -48,7 +48,7 @@
 		</div>
 	</div>
 	
-	<div th:if="!hasModel">暂无流程模板，请先配置！</div>
+	<div th:if="${modelCount}==0">暂无流程模板，请先配置！</div>
 	<!-- 模态框（Modal） -->
 	<div class="modal fade" id="myModal" tabindex="-1" role="dialog"
 		aria-labelledby="myModalLabel" aria-hidden="true">

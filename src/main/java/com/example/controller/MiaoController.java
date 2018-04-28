@@ -84,13 +84,13 @@ public class MiaoController {
 			}
 		}
 		
-		boolean hasModel = false;
+		Integer modelCount = 0;
 		Sort sort = new Sort(Direction.DESC, "updateTime");
 		List<ModelData> models = bpmnModelService.findAll(sort);
 		if(models != null) {
 			models = models.stream().filter(item->item.getModel_type().equals(0)).collect(Collectors.toList());
 			if(models.size() > 0) {
-				hasModel = true;
+				modelCount = models.size();
 				List<DefaultModel> defaults = defaultModelService.findAll();
 				if(defaults.size() == 0) {
 					DefaultModel d = new DefaultModel();
@@ -109,7 +109,7 @@ public class MiaoController {
 		// 将forms参数返回
 		model.addAttribute("forms", formsMap);
 		model.addAttribute("userType", uType);
-		model.addAttribute("showModel", hasModel);
+		model.addAttribute("modelCount", modelCount);
 		return "index";
 	}
 

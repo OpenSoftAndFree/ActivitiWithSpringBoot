@@ -4,16 +4,14 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
 //bpmn信息表
 @Entity
-@Table(name = "act_de_model")
+@Table(name = "ACT_DE_MODEL")
 public class ModelData {
     @Id
-    @GeneratedValue
     private String id;
 	
 	private String name;

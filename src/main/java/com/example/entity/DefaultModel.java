@@ -11,7 +11,7 @@ import com.mysql.jdbc.Blob;
 
 //默认模型表
 @Entity
-@Table(name = "default_model")
+@Table(name = "DEFAULT_MODEL")
 public class DefaultModel {
     @Id
     @GeneratedValue
